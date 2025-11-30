@@ -30,6 +30,7 @@ function DayCards({ dayNames, date }: IDayCardsProps) {
             <span> Create </span>
           </Button>
         </div>
+
         {isCreating && (
           <form className="mb-3">
             <Input
