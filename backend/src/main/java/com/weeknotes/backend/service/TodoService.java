@@ -8,4 +8,5 @@ public interface TodoService {
     List<TodoDto> getAllTodos();
     TodoDto getTodoById(Long id);
     TodoDto createTodo(TodoDto todoDto);
+    TodoDto updateTodo(Long todoId, TodoDto updatedTodo);
 }
