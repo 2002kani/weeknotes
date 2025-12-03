@@ -9,10 +9,21 @@ import com.weeknotes.backend.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class TodoServiceImpl implements TodoService {
     private TodoRepository todoRepository;
+
+    @Override
+    public List<TodoDto> getAllTodos(){
+        List<Todo> todos = todoRepository.findAll();
+        return todos.stream()
+                .map(TodoMapper::mapToTodoDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public TodoDto getTodoById(Long todoId){
