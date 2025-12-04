@@ -5,9 +5,16 @@ import { isToday } from "@/lib/utils";
 interface IWeekCalendarProps {
   weekDays: Date[];
   selectedDate: Date;
+  onPreviousWeek: () => void;
+  onNextWeek: () => void;
 }
 
-function WeekCalendar({ weekDays, selectedDate }: IWeekCalendarProps) {
+function WeekCalendar({
+  weekDays,
+  selectedDate,
+  onPreviousWeek,
+  onNextWeek,
+}: IWeekCalendarProps) {
   const formatWeekDay = (date: Date) => {
     return date.toLocaleDateString("en-US", {
       weekday: "short",
@@ -31,10 +38,16 @@ function WeekCalendar({ weekDays, selectedDate }: IWeekCalendarProps) {
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-gray-900">{formatMonthYear(selectedDate)}</h3>
           <div className="flex gap-2">
-            <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+            <button
+              onClick={onPreviousWeek}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            >
               <ChevronLeft className="w-5 h-5 font-gray-600" />
             </button>
-            <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer">
+            <button
+              onClick={onNextWeek}
+              className="p-2 rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
+            >
               <ChevronRight className="w-5 h-5 font-gray-600" />
             </button>
           </div>
