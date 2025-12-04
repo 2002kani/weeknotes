@@ -34,9 +34,9 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public TodoDto createTodo(TodoDto todoDto) {
-        Todo todo = TodoMapper.mapToTodo(todoDto); //Map to Entity for Repo
+        Todo todo = TodoMapper.mapToTodo(todoDto);
         Todo savedTodo = todoRepository.save(todo);
-        return TodoMapper.mapToTodoDto(savedTodo); //Map it back to give out dto
+        return TodoMapper.mapToTodoDto(savedTodo);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class TodoServiceImpl implements TodoService {
         Todo todo = todoRepository.findById(todoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee with ID " + todoId + " not found."));
 
-        todo.setDay(updatedTodo.getDay());
+        todo.setDate(updatedTodo.getDate());
         todo.setTask(updatedTodo.getTask());
 
         Todo updatedTodoObj = todoRepository.save(todo);

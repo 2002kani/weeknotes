@@ -7,16 +7,18 @@ public class TodoMapper {
     public static TodoDto mapToTodoDto(Todo todo){
         return new TodoDto(
                 todo.getId(),
-                todo.getDay(),
-                todo.getTask()
+                todo.getDate(),
+                todo.getTask(),
+                todo.isCompleted()
         );
     }
 
     public static Todo mapToTodo(TodoDto todoDto){
         return new Todo(
                 todoDto.getId(),
-                todoDto.getDay(),
-                todoDto.getTask()
+                todoDto.getDate(),
+                todoDto.getTask(),
+                todoDto.isCompleted()
         );
     }
 }
