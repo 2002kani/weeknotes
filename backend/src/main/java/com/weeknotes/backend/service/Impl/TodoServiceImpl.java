@@ -9,6 +9,7 @@ import com.weeknotes.backend.service.TodoService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,5 +58,11 @@ public class TodoServiceImpl implements TodoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Employee with ID \" + todoId + \" not found."));
 
         todoRepository.deleteById(todoId);
+    }
+
+    @Override
+    public List<TodoDto> getTodosByDateRange(LocalDate startDate, LocalDate endDate) {
+        List<Todo> todos = todoRepository.findByDateBetweenOrderByDateAsc(startDate, endDate);
+        return todos.stream().map(TodoMapper::mapToTodoDto).collect(Collectors.toList());
     }
 }

@@ -3,10 +3,12 @@ package com.weeknotes.backend.controller;
 import com.weeknotes.backend.dto.TodoDto;
 import com.weeknotes.backend.service.TodoService;
 import lombok.AllArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -43,5 +45,14 @@ public class TodoController {
     public ResponseEntity<Void> deleteTodoById(@PathVariable Long id){
         todoService.deleteTodoById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/week")
+    public ResponseEntity<List<TodoDto>> getWeekTodos(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)LocalDate endDate
+            ){
+        List<TodoDto> todos = todoService.getTodosByDateRange(startDate, endDate);
+        return ResponseEntity.ok(todos);
     }
 }
