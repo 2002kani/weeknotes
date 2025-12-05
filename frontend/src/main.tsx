@@ -3,11 +3,15 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { BrowserRouter } from "react-router-dom";
+import { QueryParamProvider } from "use-query-params";
+import { ReactRouter6Adapter } from "use-query-params/adapters/react-router-6";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <QueryParamProvider adapter={ReactRouter6Adapter}>
+        <App />
+      </QueryParamProvider>
     </BrowserRouter>
   </StrictMode>
 );

@@ -1,17 +1,19 @@
 import { Item, ItemContent } from "./ui/item";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Plus } from "lucide-react";
-
+import { Plus, Trash2, Check } from "lucide-react";
 import { isToday } from "@/lib/utils";
 import { useState } from "react";
+import type { Todo } from "@/api/todoApi";
 
 interface IDayCardsProps {
   dayNames: string;
   date: Date;
+  todos: Todo[];
+  onTodosChange: () => void;
 }
 
-function DayCards({ dayNames, date }: IDayCardsProps) {
+function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
   const [isCreating, setIsCreating] = useState(false);
 
   return (
@@ -27,7 +29,7 @@ function DayCards({ dayNames, date }: IDayCardsProps) {
             onClick={() => setIsCreating(!isCreating)}
           >
             <Plus />
-            <span> Create </span>
+            <span>Create</span>
           </Button>
         </div>
 
@@ -54,6 +56,20 @@ function DayCards({ dayNames, date }: IDayCardsProps) {
               </Button>
             </div>
           </form>
+        )}
+
+        {/* Todo Liste anzeigen */}
+        {todos.length > 0 && (
+          <div className="space-y-2">
+            {todos.map((todo) => (
+              <div
+                key={todo.id}
+                className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+              >
+                <span className="flex-1 text-gray-900">{todo.task}</span>
+              </div>
+            ))}
+          </div>
         )}
       </ItemContent>
     </Item>
