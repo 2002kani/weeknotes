@@ -1,5 +1,5 @@
 # Weeknotes
-A modern, minimalist weekly todo application for myself, mainly because I like to use apps like this and to improve my skills in the Spring Framework. Its nothing special, just for personal use.
+A modern, minimalist weekly todo application for myself, mainly because I like to use tools like this and to sharpen my skills with the Spring Framework. Its nothing fancy, just for personal use.
 
 ![WeekNotes Preview](./screenshots/sample-image.png)
 
