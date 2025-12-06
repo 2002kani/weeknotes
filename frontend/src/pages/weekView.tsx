@@ -47,7 +47,6 @@ function WeekView() {
     }
   }, [query.startDate, query.endDate, weekDays, setQuery]);
 
-  // Hole Todos für die aktuelle Woche
   const startDateStr = query.startDate ? formatDateForUrl(query.startDate) : "";
   const endDateStr = query.endDate ? formatDateForUrl(query.endDate) : "";
 
@@ -55,7 +54,7 @@ function WeekView() {
 
   console.log(todos);
 
-  // Gruppiere Todos nach Datum
+  // Gruppiere Todos nach Datum (Komplex)
   const todosByDate = useMemo(() => {
     return todos.reduce((acc, todo) => {
       if (!acc[todo.date]) {
