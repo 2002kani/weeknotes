@@ -6,7 +6,7 @@ export const formatDateForUrl = (date: Date) => {
   return `${year}-${month}-${day}`;
 };
 
-// Parst "YYYY-MM-DD" String zu Date
+// Parst "YYYY-MM-DD" String zu Date (DEPRECATED)
 export const parseDateFromUrl = (dateString: string): Date => {
   return new Date(dateString + "T00:00:00");
 };

@@ -1,19 +1,47 @@
+import { useState } from "react";
+
+import { deleteTodoById, updateTodoCompleted } from "@/api/todoApi";
+import type { Todo } from "@/api/todoApi";
+
 import { Item, ItemContent } from "./ui/item";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Plus } from "lucide-react";
+import { Checkbox } from "./ui/checkbox";
+import { Plus, Trash2 } from "lucide-react";
 import { isToday } from "@/lib/utils";
-import { useState } from "react";
-import type { Todo } from "@/api/todoApi";
 
 interface IDayCardsProps {
   dayNames: string;
   date: Date;
   todos: Todo[];
+  onTodosChange: () => void;
 }
 
-function DayCards({ dayNames, date, todos }: IDayCardsProps) {
+function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
   const [isCreating, setIsCreating] = useState(false);
+
+  const handleCompleteUpdate = async (todo: Todo) => {
+    try {
+      await updateTodoCompleted(todo.id, {
+        ...todo,
+        completed: !todo.completed,
+      });
+      onTodosChange();
+    } catch (err) {
+      console.error("Failed to update todo:", err);
+      alert("Fehler beim Aktualisieren des Todos");
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await deleteTodoById(id);
+      onTodosChange();
+    } catch (err) {
+      console.error("Failed to delete todo:", err);
+      alert("Fehler beim Löschen des Todos");
+    }
+  };
 
   return (
     <Item variant="outline">
@@ -57,18 +85,39 @@ function DayCards({ dayNames, date, todos }: IDayCardsProps) {
           </form>
         )}
 
-        {/* Todo Liste anzeigen */}
-        {todos.length > 0 && (
+        {todos.length > 0 ? (
           <div className="space-y-2">
             {todos.map((todo) => (
               <div
                 key={todo.id}
-                className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+                className="flex items-center gap-3 p-3 bg-gray-100 rounded-lg"
               >
-                <span className="flex-1 text-gray-900">{todo.task}</span>
+                <Checkbox
+                  onClick={() => handleCompleteUpdate(todo)}
+                  className="h-5 w-5 rounded-sm border-2 border-blue-500 transition-all duration-50 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                />
+                <span
+                  className={`flex-1 ${
+                    todo.completed
+                      ? "line-through text-gray-400"
+                      : "text-gray-900"
+                  }`}
+                >
+                  {todo.task}
+                </span>
+                <Trash2
+                  onClick={() => handleDelete(todo.id)}
+                  className="text-gray-500 h-4 w-4 cursor-pointer hover:text-red-500 active:text-red-500"
+                />
               </div>
             ))}
           </div>
+        ) : (
+          !isCreating && (
+            <p className="text-gray-400 text-sm text-center py-2">
+              No todos yet
+            </p>
+          )
         )}
       </ItemContent>
     </Item>
