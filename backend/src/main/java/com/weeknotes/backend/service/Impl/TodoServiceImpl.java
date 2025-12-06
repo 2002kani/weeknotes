@@ -47,6 +47,7 @@ public class TodoServiceImpl implements TodoService {
 
         todo.setDate(updatedTodo.getDate());
         todo.setTask(updatedTodo.getTask());
+        todo.setCompleted(updatedTodo.isCompleted());
 
         Todo updatedTodoObj = todoRepository.save(todo);
         return TodoMapper.mapToTodoDto(updatedTodoObj);

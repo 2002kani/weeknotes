@@ -23,6 +23,7 @@ public class TodoController {
         return ResponseEntity.ok(todos);
     }
 
+    // Feature not available yet
     @GetMapping("/{id}")
     public ResponseEntity<TodoDto> getTodoById(@PathVariable Long id){
          TodoDto todoDto = todoService.getTodoById(id);
