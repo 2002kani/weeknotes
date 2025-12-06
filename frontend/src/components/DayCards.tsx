@@ -1,7 +1,7 @@
 import { Item, ItemContent } from "./ui/item";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { Plus, Trash2, Check } from "lucide-react";
+import { Plus } from "lucide-react";
 import { isToday } from "@/lib/utils";
 import { useState } from "react";
 import type { Todo } from "@/api/todoApi";
@@ -10,10 +10,9 @@ interface IDayCardsProps {
   dayNames: string;
   date: Date;
   todos: Todo[];
-  onTodosChange: () => void;
 }
 
-function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
+function DayCards({ dayNames, date, todos }: IDayCardsProps) {
   const [isCreating, setIsCreating] = useState(false);
 
   return (

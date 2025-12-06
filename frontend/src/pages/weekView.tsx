@@ -51,10 +51,7 @@ function WeekView() {
   const startDateStr = query.startDate ? formatDateForUrl(query.startDate) : "";
   const endDateStr = query.endDate ? formatDateForUrl(query.endDate) : "";
 
-  const { todos, isLoading, isError, mutate } = useTodos(
-    startDateStr,
-    endDateStr
-  );
+  const { todos, isLoading, isError } = useTodos(startDateStr, endDateStr);
 
   console.log(todos);
 
@@ -138,7 +135,6 @@ function WeekView() {
                 date={date}
                 dayNames={DayNames[index]}
                 todos={todosForDay}
-                onTodosChange={mutate}
               />
             );
           })}
