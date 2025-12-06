@@ -124,7 +124,7 @@ function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
               >
                 <Checkbox
                   onClick={() => handleCompleteUpdate(todo)}
-                  className="h-5 w-5 rounded-sm border-2 border-blue-500 transition-all duration-50 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
+                  className="h-5 w-5 rounded-sm border-2 border-blue-500 data-[state=checked]:bg-blue-500 data-[state=checked]:border-blue-500"
                 />
                 <span
                   className={`flex-1 ${
