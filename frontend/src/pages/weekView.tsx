@@ -55,8 +55,6 @@ function WeekView() {
     endDateStr
   );
 
-  console.log(todos);
-
   // Gruppiere Todos nach Datum (Komplex)
   const todosByDate = useMemo(() => {
     return todos.reduce((acc, todo) => {

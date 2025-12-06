@@ -1,12 +1,6 @@
 import useSWR from "swr";
 import { fetchTodosByDateRange } from "@/api/todoApi";
-
-export interface Todo {
-  id: number;
-  date: string;
-  task: string;
-  completed: boolean;
-}
+import type { Todo } from "@/types/todo";
 
 export const useTodos = (startDate: string, endDate: string) => {
   const { data, error, isLoading, mutate } = useSWR<Todo[]>(

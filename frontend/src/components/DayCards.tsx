@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { deleteTodoById, updateTodoCompleted } from "@/api/todoApi";
-import type { Todo } from "@/api/todoApi";
+import { createTodo, deleteTodoById, updateTodoCompleted } from "@/api/todoApi";
+import type { Todo } from "@/types/todo";
 
 import { Item, ItemContent } from "./ui/item";
 import { Button } from "./ui/button";
@@ -9,6 +9,7 @@ import { Input } from "./ui/input";
 import { Checkbox } from "./ui/checkbox";
 import { Plus, Trash2 } from "lucide-react";
 import { isToday } from "@/lib/utils";
+import { formatDateForUrl } from "@/lib/formatDate";
 
 interface IDayCardsProps {
   dayNames: string;
@@ -19,6 +20,33 @@ interface IDayCardsProps {
 
 function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
   const [isCreating, setIsCreating] = useState(false);
+  const [todoInput, setTodoInput] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const dateKey = formatDateForUrl(date);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!todoInput || isSubmitting) return;
+
+    setIsSubmitting(true);
+    try {
+      await createTodo({
+        date: dateKey,
+        task: todoInput,
+        completed: false,
+      });
+
+      setIsCreating(false);
+      setTodoInput("");
+      onTodosChange();
+    } catch (err) {
+      console.error("Failed to create todo:", err);
+      alert("Error while creating a Todo.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleCompleteUpdate = async (todo: Todo) => {
     try {
@@ -29,7 +57,7 @@ function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
       onTodosChange();
     } catch (err) {
       console.error("Failed to update todo:", err);
-      alert("Fehler beim Aktualisieren des Todos");
+      alert("Error while updating a Todo.");
     }
   };
 
@@ -39,7 +67,7 @@ function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
       onTodosChange();
     } catch (err) {
       console.error("Failed to delete todo:", err);
-      alert("Fehler beim Löschen des Todos");
+      alert("Error while deleting a Todo.");
     }
   };
 
@@ -61,8 +89,10 @@ function DayCards({ dayNames, date, todos, onTodosChange }: IDayCardsProps) {
         </div>
 
         {isCreating && (
-          <form className="mb-3">
+          <form onSubmit={handleSubmit} className="mb-3">
             <Input
+              onChange={(e) => setTodoInput(e.target.value)}
+              value={todoInput}
               type="text"
               className="mb-4"
               placeholder="What do you want to do?"

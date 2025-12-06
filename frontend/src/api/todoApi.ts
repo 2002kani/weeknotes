@@ -1,13 +1,6 @@
 import { ENDPOINT } from "@/config/api";
-
-export interface Todo {
-  id: number;
-  date: string;
-  task: string;
-  completed: boolean;
-}
-
-export type updateTodoDto = Partial<Omit<Todo, "id">>;
+import type { createTodoDto, Todo } from "@/types/todo";
+import type { updateTodoDto } from "@/types/todo";
 
 export const fetchTodosByDateRange = async (
   startDate: string,
@@ -44,6 +37,22 @@ export const updateTodoCompleted = async (
       "Content-type": "application/json",
     },
     body: JSON.stringify(updatedTodo),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to update todo: ${response.statusText}`);
+  }
+
+  return response.json();
+};
+
+export const createTodo = async (todo: createTodoDto): Promise<Todo> => {
+  const response = await fetch(`${ENDPOINT.TODOS}`, {
+    method: "POST",
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: JSON.stringify(todo),
   });
 
   if (!response.ok) {
