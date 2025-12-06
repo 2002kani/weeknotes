@@ -15,3 +15,17 @@ A modern, minimalist weekly todo application for myself, mainly because I like t
 
 
 ## Tech Stack
+**Backend**
+
+- Java
+- Spring Boot
+- PostgreSQL
+- Spring Data JPA
+
+**Frontend**
+
+- React
+- Typescript
+- SWR
+- Shadcn
+- Tailwind
